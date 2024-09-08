@@ -6,8 +6,12 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import TextArea from '@/Components/TextArea';
 import LeftArrow from '@/Components/LeftArrow';
+import { useRef } from 'react';
+import EditorTinyMCE from '@/Components/EditorTinyMCE';
 
 export default function Create({ auth }) {
+    const editorRef = useRef();
+
     const { data, setData, post, processing, errors } = useForm({
         user_id: auth.user.id,
         title: '',
@@ -20,6 +24,10 @@ export default function Create({ auth }) {
 
         post(route('posts.store'));
     };
+
+    const setArticle = () => {
+        setData('article', editorRef.current.getContent());
+    }
 
     return (
         <AuthenticatedLayout
@@ -96,16 +104,13 @@ export default function Create({ auth }) {
                             <div className='mt-4'>
                                 <InputLabel htmlFor="article" value="Article" />
 
-                                <TextArea
-                                    id="article"
-                                    name="article"
-                                    rows="6"
-                                    value={data.article}
-                                    maxLength='65535'
-                                    required
-                                    className="mt-1 block w-full"
-                                    onChange={(e) => setData('article', e.target.value)}
-                                />
+                                <div className="mt-1 block w-full">
+                                    <EditorTinyMCE
+                                        editorRef={editorRef}
+                                        value={data.article}
+                                        id="article"
+                                    />
+                                </div>
 
                                 <p className={
                                     "mt-1 text-sm text-right " +
@@ -118,7 +123,7 @@ export default function Create({ auth }) {
                             </div>
 
                             <div className="flex items-center justify-start mt-4">
-                                <PrimaryButton disabled={processing}>
+                                <PrimaryButton onClick={setArticle} disabled={processing}>
                                     Create
                                 </PrimaryButton>
                             </div>

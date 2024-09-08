@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, router, useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import RightArrow from "./RightArrow";
 import Avatar from "./Avatar";
 import parse from 'html-react-parser';
@@ -59,7 +59,7 @@ export default function Article({ auth, postModel, show = false }) {
             onFinish: () => { reset('comment') },
         });
     };
-    
+
     return (
         <article className="my-2 p-4 w-full rounded-[10px] dark:bg-gray-800 max-w-6xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
             <div className="mb-4 lg:mb-6 not-format">
@@ -125,21 +125,22 @@ export default function Article({ auth, postModel, show = false }) {
 
             <div>
                 {!show ?
-                    <div className='flex justify-between font-bold text-indigo-600 mt-4'>
+                    <div className='flex justify-between mt-4'>
                         <div className="flex justify item-center gap-1">
                             <div className="flex items-center text gap-1 text-sm">
-                                { postModel.comments_count }
+                                {postModel.comments_count}
                                 <Chat />
                             </div>
 
                             <div className="flex items-center text gap-1 text-sm">
-                                { postModel.likes_count }
+                                {postModel.likes_count}
                                 <Liked />
                             </div>
                         </div>
-                        <Link className="flex gap-1" href={route("posts.show", postModel.id)}>
+                        <Link className="flex font-bold text-indigo-600 gap-1" href={route("posts.show", postModel.id)}>
                             Read article
                             <RightArrow
+                                className="font-bold text-indigo-600"
                                 id="rightarrow"
                                 color="rgb(79 70 229)"
                                 height="25px"
@@ -152,7 +153,7 @@ export default function Article({ auth, postModel, show = false }) {
                 {show ?
                     <div className="flex items-center gap-3">
                         <div className="flex items-center text gap-1 text-sm cursor-pointer" onClick={postCommenting}>
-                            { postModel.comments_count }
+                            {postModel.comments_count}
                             <Chat />
                         </div>
 
@@ -163,7 +164,7 @@ export default function Article({ auth, postModel, show = false }) {
                             as="button"
                         >
                             <div className="flex items-center text-sm gap-1">
-                                { postModel.likes_count }
+                                {postModel.likes_count}
                                 <LikeHeart
                                     liked={data.like}
                                     onClick={(e) => setData('like', data.like ? false : true)}

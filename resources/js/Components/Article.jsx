@@ -117,7 +117,7 @@ export default function Article({ auth, postModel, show = false }) {
                 </div>
 
                 {show ?
-                    <div className="my-4 text-1xl leading-tight text-gray-900 lg:mb-6 lg:text-1xl dark:text-white break-words">
+                    <div className="my-4 leading-tight text-gray-900 lg:mb-6 lg:text-1xl dark:text-white break-words">
                         {parse(postModel.article)}
                     </div>
                     : null}

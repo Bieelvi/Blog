@@ -7,9 +7,9 @@ export default function Show({ auth, post }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Posts</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{post.title}</h2>}
         >
-            <Head title="Posts" />
+            <Head title={post.title} />
 
             <div className="flex py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <Link href={route('posts.index')}>

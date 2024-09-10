@@ -38,11 +38,11 @@ export default function CommentCard({ comment }) {
                     as="button"
                 >
                     <div className="flex items-center text-sm gap-1">
-                        {comment.likes_count}
                         <LikeHeart
                             liked={data.like}
                             onClick={(e) => setData('like', data.like ? false : true)}
-                        />
+                            />
+                        {comment.likes_count}
                     </div>
                 </Link>
             </div>

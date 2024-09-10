@@ -16,14 +16,16 @@ import LikeHeart from './LikeHeart';
 import Chat from './Svgs/Chat';
 import Liked from './Svgs/Liked';
 import Gear from './Svgs/Gear';
+import LikeFavorite from './LikeFavorite';
 
-export default function Article({ className = '', auth, postModel, show = false, postComments = null }) {
+export default function Article({ className = '', auth, postModel, show = false, postComments = null, reactions = null}) {
     const [confirmingPostDeletion, setConfirmingPostDeletion] = useState(false);
     const [postComment, setPostComment] = useState(false);
 
     const { data, setData, post, reset, delete: destroy, errors, processing, recentlySuccessful } = useForm({
         comment: '',
         like: postModel.liked,
+        favorite: postModel.favorited,
         post_id: postModel.id,
         user_id: auth.user.id
     });
@@ -151,27 +153,45 @@ export default function Article({ className = '', auth, postModel, show = false,
                     : null}
 
                 {show ?
-                    <div className="flex items-center gap-3">
-                        <div className="flex items-center text gap-1 text-sm cursor-pointer" onClick={postCommenting}>
-                            {postModel.comments_count}
-                            <Chat />
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center text gap-1 text-sm cursor-pointer" onClick={postCommenting}>
+                                <Chat />
+                                {postModel.comments_count}
+                            </div>
+
+                            <Link
+                                preserveScroll
+                                href={route('posts.like', { post: data.post_id })}
+                                method='post'
+                                as="button"
+                            >
+                                <div className="flex items-center text-sm gap-1">
+                                    <LikeHeart
+                                        liked={data.like}
+                                        onClick={(e) => setData('like', data.like ? false : true)}
+                                    />
+                                    {postModel.likes_count}
+                                </div>
+                            </Link>
                         </div>
 
-                        <Link
-                            preserveScroll
-                            href={route('posts.like', { post: data.post_id })}
-                            method='post'
-                            as="button"
-                        >
-                            <div className="flex items-center text-sm gap-1">
-                                {postModel.likes_count}
-                                <LikeHeart
-                                    liked={data.like}
-                                    onClick={(e) => setData('like', data.like ? false : true)}
-                                />
-                            </div>
-                        </Link>
-
+                        <div>
+                            <Link
+                                preserveScroll
+                                href={route('posts.favorite', { post: data.post_id })}
+                                method='post'
+                                as="button"
+                            >
+                                <div className="flex items-center text-sm gap-1">
+                                    <LikeFavorite
+                                        favorited={data.favorite}
+                                        onClick={(e) => setData('favorite', data.favorite ? false : true)}
+                                    />
+                                    {postModel.favorites_count}
+                                </div>
+                            </Link>
+                        </div>
                     </div>
                     : null}
             </div>

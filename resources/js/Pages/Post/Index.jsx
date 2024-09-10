@@ -1,4 +1,5 @@
 import Article from '@/Components/Article';
+import Header from '@/Components/Header';
 import Pagination from '@/Components/Pagination';
 import PlusButton from '@/Components/PlusButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
@@ -12,7 +13,7 @@ export default function Index({ auth, posts }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Posts</h2>}
+            header={<Header content="Posts" />}
         >
             <Head title="Posts" />
 

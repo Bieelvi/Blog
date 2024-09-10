@@ -2,12 +2,13 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import LeftArrow from '@/Components/LeftArrow';
 import Article from '@/Components/Article';
+import Header from '@/Components/Header';
 
-export default function Show({ auth, post, postComments }) {
+export default function Show({ auth, post, postComments, reactions }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{post.title}</h2>}
+            header={<Header content={post.title} />}
         >
             <Head title={post.title} />
 
@@ -31,6 +32,7 @@ export default function Show({ auth, post, postComments }) {
                             postModel={post}
                             postComments={postComments}
                             show={true}
+                            reactions={reactions}
                         />
                     </div>
                 </div>

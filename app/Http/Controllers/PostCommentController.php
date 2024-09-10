@@ -19,7 +19,7 @@ class PostCommentController extends Controller
         return back();
     }
 
-    public function like(Request $request, string $id)
+    public function like(Request $request, string $id): RedirectResponse
     {
         $postComment = PostComment::find($id);
         $postComment->likes()->toggle($request->user()->id);

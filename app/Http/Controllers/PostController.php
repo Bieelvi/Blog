@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\PostComment;
+use App\Models\Reaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -60,11 +61,16 @@ class PostController extends Controller
         $post = Post::with([
                 'user',
                 'comments' => ['user'],
-                'likes'
+                'likes',
+                'favorites'
             ])
-            ->withCount(['likes', 'comments'])
+            ->withCount(['likes', 'comments', 'favorites'])
             ->withCount(['likes as liked' => fn($q) => $q->where('user_id', $request->user()->id)])
-            ->withCasts(['liked' => 'boolean'])
+            ->withCount(['favorites as favorited' => fn($q) => $q->where('user_id', $request->user()->id)])
+            ->withCasts([
+                'liked' => 'boolean', 
+                'favorited' => 'boolean'
+            ])
             ->where('id', $id)
             ->first();
 
@@ -140,10 +146,18 @@ class PostController extends Controller
         ));
     }
 
-    public function like(Request $request, string $id)
+    public function like(Request $request, string $id): RedirectResponse
     {
         $post = Post::find($id);
         $post->likes()->toggle($request->user()->id);
+
+        return back();
+    }
+
+    public function favorite(Request $request, string $id): RedirectResponse
+    {
+        $post = Post::find($id);
+        $post->favorites()->toggle($request->user()->id);
 
         return back();
     }

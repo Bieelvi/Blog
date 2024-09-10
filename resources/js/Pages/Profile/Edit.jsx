@@ -4,12 +4,13 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import { Head } from '@inertiajs/react';
 import AvatarForm from './Partials/AvatarForm';
+import Header from '@/Components/Header';
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Profile</h2>}
+            header={<Header content="Profile" />}
         >
             <Head title="Profile" />
 

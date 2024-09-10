@@ -8,6 +8,7 @@ import TextArea from '@/Components/TextArea';
 import LeftArrow from '@/Components/LeftArrow';
 import { useRef } from 'react';
 import EditorTinyMCE from '@/Components/EditorTinyMCE';
+import Header from '@/Components/Header';
 
 export default function Edit({ auth, post }) {
     const editorRef = useRef();
@@ -31,7 +32,7 @@ export default function Edit({ auth, post }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Update - {post.title}</h2>}
+            header={<Header content={`Edit - ${post.title}`} />}
         >
             <Head title={"Update " + post.title} />
 

@@ -1,3 +1,4 @@
+import AdminHeader from '@/Components/AdminHeader';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
@@ -5,7 +6,7 @@ export default function Index({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Site Administrator</h2>}
+            header={<AdminHeader content="Administration" />}
         >
             <Head title="Site Administrator" />
 

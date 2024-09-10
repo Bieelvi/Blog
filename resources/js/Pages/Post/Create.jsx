@@ -8,6 +8,7 @@ import TextArea from '@/Components/TextArea';
 import LeftArrow from '@/Components/LeftArrow';
 import { useRef } from 'react';
 import EditorTinyMCE from '@/Components/EditorTinyMCE';
+import Header from '@/Components/Header';
 
 export default function Create({ auth }) {
     const editorRef = useRef();
@@ -32,7 +33,7 @@ export default function Create({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Create new post</h2>}
+            header={<Header content="Create new post" />}
         >
             <Head title="Create new post" />
 

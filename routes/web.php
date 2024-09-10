@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     ])->middleware('ownerpost');
     Route::get('/posts-search', [PostController::class, 'search'])->name('posts.search');
     Route::post('/posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
+    Route::post('/comments/{comment}/like', [PostCommentController::class, 'like'])->name('comments.like');
 
     Route::resource('site-admin', SiteAdminController::class)
         ->middleware('admin');

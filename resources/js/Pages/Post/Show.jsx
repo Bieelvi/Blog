@@ -3,7 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import LeftArrow from '@/Components/LeftArrow';
 import Article from '@/Components/Article';
 
-export default function Show({ auth, post }) {
+export default function Show({ auth, post, postComments }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -25,10 +25,11 @@ export default function Show({ auth, post }) {
 
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div className="p-4 text-gray-900 dark:text-gray-100">
+                    <div className="text-gray-900 dark:text-gray-100">
                         <Article
                             auth={auth}
                             postModel={post}
+                            postComments={postComments}
                             show={true}
                         />
                     </div>

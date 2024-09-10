@@ -122,7 +122,7 @@ export default function Create({ auth }) {
                                 <InputError message={errors.article} className="mt-2" />
                             </div>
 
-                            <div className="flex items-center justify-start mt-4">
+                            <div className="mt-4">
                                 <PrimaryButton onClick={setArticle} disabled={processing}>
                                     Create
                                 </PrimaryButton>

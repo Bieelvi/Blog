@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\PostComment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -66,9 +67,21 @@ class PostController extends Controller
             ->withCasts(['liked' => 'boolean'])
             ->where('id', $id)
             ->first();
+
+        $postComments = PostComment::with([
+                'likes', 
+                'user'
+            ])
+            ->withCount(['likes'])
+            ->withCount(['likes as liked' => fn($q) => $q->where('user_id', $request->user()->id)])
+            ->withCasts(['liked' => 'boolean'])
+            ->wherePostId($post->id)
+            ->latest('created_at')
+            ->get();
             
         return Inertia::render('Post/Show', compact(
-            'post'
+            'post',
+            'postComments'
         ));
     }
 

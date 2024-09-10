@@ -1,8 +1,13 @@
+import { Link, useForm } from "@inertiajs/react";
 import Avatar from "./Avatar";
 import LikeHeart from "./LikeHeart";
-import Chat from "./Svgs/Chat";
+import Bullet from "./Svgs/Bullet";
 
 export default function CommentCard({ comment }) {
+    const { data, setData } = useForm({
+        like: comment.liked
+    });
+
     return (
         <div className="flex flex-col p-3 my-4 border rounded border-indigo-400">
             <div className="inline-flex items-start mr-3 text-sm text-gray-900 dark:text-white">
@@ -13,9 +18,7 @@ export default function CommentCard({ comment }) {
                         {comment.user.name}
                     </a>
 
-                    <svg fill="rgb(79 70 229)" width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.096 16q0 1.632 1.152 2.784t2.752 1.12 2.752-1.12 1.152-2.784-1.152-2.752-2.752-1.152-2.752 1.152-1.152 2.752z"></path>
-                    </svg>
+                    <Bullet />
 
                     <p className="text-gray-500 dark:text-gray-400">
                         {comment.created_at}
@@ -28,8 +31,20 @@ export default function CommentCard({ comment }) {
             </div>
 
             <div className="flex items-center gap-3">
-                <Chat /> 
-                <LikeHeart />
+                <Link
+                    preserveScroll
+                    href={route('comments.like', { comment: comment.id })}
+                    method='post'
+                    as="button"
+                >
+                    <div className="flex items-center text-sm gap-1">
+                        {comment.likes_count}
+                        <LikeHeart
+                            liked={data.like}
+                            onClick={(e) => setData('like', data.like ? false : true)}
+                        />
+                    </div>
+                </Link>
             </div>
         </div>
     );

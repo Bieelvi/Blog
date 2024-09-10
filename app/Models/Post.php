@@ -22,7 +22,7 @@ class Post extends Model
     protected function casts(): array
     {
         return [
-            'created_at' => 'datetime:Y-m-d H:i:s',
+            'created_at' => 'datetime:Y M j',
         ];
     }
 

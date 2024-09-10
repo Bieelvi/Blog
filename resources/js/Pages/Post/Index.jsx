@@ -33,6 +33,7 @@ export default function Index({ auth, posts }) {
                     <div className="text-gray-900 dark:text-gray-100">
                         {posts.data.map((post, index) => (
                             <Article
+                                className="my-2"
                                 key={index}
                                 auth={auth}
                                 postModel={post}

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostCommentRequest;
+use App\Models\Post;
 use App\Models\PostComment;
+use App\Notifications\NewPostComment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class PostCommentController extends Controller
 {
@@ -14,7 +17,13 @@ class PostCommentController extends Controller
      */
     public function store(PostCommentRequest $request): RedirectResponse
     {
-        PostComment::create($request->all());
+        $postComment = PostComment::create($request->all());
+
+        $post = Post::find($postComment->post_id);
+        Notification::send(
+            $post->favorites, 
+            new NewPostComment($post, $postComment)
+        );
 
         return back();
     }

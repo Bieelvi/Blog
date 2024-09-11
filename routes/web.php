@@ -2,9 +2,7 @@
 
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\SiteAdminController;
 use Illuminate\Support\Facades\Route;
 

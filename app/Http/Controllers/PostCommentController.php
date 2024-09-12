@@ -26,7 +26,10 @@ class PostCommentController extends Controller
             new NewPostComment($post, $postComment)
         );
 
-        return Redirect::back();
+        return Redirect::back()->with([
+            'message' => 'Commentary add successfully',
+            'type' => 'success'
+        ]);
     }
 
     /**
@@ -37,7 +40,10 @@ class PostCommentController extends Controller
         PostComment::where('id', $id)
             ->update($request->all());
 
-        return Redirect::back();
+        return Redirect::back()->with([
+            'message' => 'Commentary edited successfully',
+            'type' => 'success'
+        ]);
     }
 
     /**
@@ -49,7 +55,10 @@ class PostCommentController extends Controller
 
         $postComment->delete();
 
-        return Redirect::back();
+        return Redirect::back()->with([
+            'message' => 'Commentary deleted successfully',
+            'type' => 'success'
+        ]);
     }
 
     public function like(Request $request, string $id): RedirectResponse
@@ -57,6 +66,9 @@ class PostCommentController extends Controller
         $postComment = PostComment::find($id);
         $postComment->likes()->toggle($request->user()->id);
 
-        return Redirect::back();
+        return Redirect::back()->with([
+            'message' => 'Commentary liked/unliked',
+            'type' => 'success'
+        ]);
     }
 }

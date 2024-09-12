@@ -8,7 +8,7 @@ export default function AdminHeader({ content }) {
                     {content}
                 </h2>
 
-                <div className="flex gap-2">
+                <div className="p-1 flex gap-2">
                     <PrimaryButton>
                         oi
                     </PrimaryButton>

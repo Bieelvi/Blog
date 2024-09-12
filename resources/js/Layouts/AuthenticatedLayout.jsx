@@ -27,21 +27,21 @@ export default function Authenticated({ user, header, children }) {
     }, [flash]);
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
             <Nav user={user} />
 
             {header && header}
 
-            <main>
-                {flashMessage && (
-                    <Notification
-                        message={flashMessage}
-                        typeMessage={flashType}
-                    />
-                )}
-
+            <main className="flex-1 mr-2 ml-2">
                 {children}
             </main>
+
+            {flashMessage && (
+                <Notification
+                    message={flashMessage}
+                    typeMessage={flashType}
+                />
+            )}
 
             <ScrollButtonTop />
 

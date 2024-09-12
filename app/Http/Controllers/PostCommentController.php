@@ -67,7 +67,7 @@ class PostCommentController extends Controller
         $postComment->likes()->toggle($request->user()->id);
 
         return Redirect::back()->with([
-            'message' => 'Commentary liked/unliked',
+            'message' => 'Commentary liked/unliked successfully',
             'type' => 'success'
         ]);
     }

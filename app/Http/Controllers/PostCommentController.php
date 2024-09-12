@@ -9,6 +9,7 @@ use App\Notifications\NewPostComment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redirect;
 
 class PostCommentController extends Controller
 {
@@ -25,7 +26,30 @@ class PostCommentController extends Controller
             new NewPostComment($post, $postComment)
         );
 
-        return back();
+        return Redirect::back();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(PostCommentRequest $request, string $id): RedirectResponse
+    {
+        PostComment::where('id', $id)
+            ->update($request->all());
+
+        return Redirect::back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id): RedirectResponse
+    {
+        $postComment = PostComment::find($id);
+
+        $postComment->delete();
+
+        return Redirect::back();
     }
 
     public function like(Request $request, string $id): RedirectResponse
@@ -33,6 +57,6 @@ class PostCommentController extends Controller
         $postComment = PostComment::find($id);
         $postComment->likes()->toggle($request->user()->id);
 
-        return back();
+        return Redirect::back();
     }
 }

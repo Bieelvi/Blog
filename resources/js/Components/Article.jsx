@@ -18,14 +18,12 @@ import Liked from './Svgs/Liked';
 import Gear from './Svgs/Gear';
 import LikeFavorite from './LikeFavorite';
 
-export default function Article({ className = '', auth, postModel, show = false, postComments = null, reactions = null}) {
+export default function Article({ className = '', auth, postModel, show = false, postComments = null}) {
     const [confirmingPostDeletion, setConfirmingPostDeletion] = useState(false);
     const [postComment, setPostComment] = useState(false);
 
     const { data, setData, post, reset, delete: destroy, errors, processing, recentlySuccessful } = useForm({
         comment: '',
-        like: postModel.liked,
-        favorite: postModel.favorited,
         post_id: postModel.id,
         user_id: auth.user.id
     });
@@ -68,6 +66,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                 <div className="flex items-center justify-between mb-6 not-italic">
                     <div className="inline-flex items-start mr-3 text-sm text-gray-900 dark:text-white">
                         <Avatar user={postModel.user} />
+
                         <div>
                             <a href="#" rel="author" className="font-bold text-gray-900 dark:text-white">
                                 {postModel.user.name}
@@ -108,8 +107,12 @@ export default function Article({ className = '', auth, postModel, show = false,
                     </div>
                 </div>
 
-                <h3 className="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white break-words">
-                    {postModel.title}
+                <h3 className={`mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white break-words ${!show ? 'hover:text-indigo-600' : ''}`}>
+                    {!show ? 
+                        <Link href={route("posts.show", postModel.id)}>
+                            {postModel.title}
+                        </Link>
+                        : postModel.title}
                 </h3>
             </div>
 
@@ -168,8 +171,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                             >
                                 <div className="flex items-center text-sm gap-1">
                                     <LikeHeart
-                                        liked={data.like}
-                                        onClick={(e) => setData('like', data.like ? false : true)}
+                                        liked={postModel.liked}
                                     />
                                     {postModel.likes_count}
                                 </div>
@@ -185,8 +187,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                             >
                                 <div className="flex items-center text-sm gap-1">
                                     <LikeFavorite
-                                        favorited={data.favorite}
-                                        onClick={(e) => setData('favorite', data.favorite ? false : true)}
+                                        favorited={postModel.favorited}
                                     />
                                     {postModel.favorites_count}
                                 </div>
@@ -231,7 +232,8 @@ export default function Article({ className = '', auth, postModel, show = false,
 
             {show && postComments.map((c, index) => (
                 <CommentCard
-                    comment={c}
+                    auth={auth}
+                    commentary={c}
                     key={index}
                 />
             ))}

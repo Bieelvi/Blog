@@ -150,7 +150,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->likes()->toggle($request->user()->id);
 
-        return back();
+        return Redirect::back();
     }
 
     public function favorite(Request $request, string $id): RedirectResponse
@@ -158,6 +158,6 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->favorites()->toggle($request->user()->id);
 
-        return back();
+        return Redirect::back();
     }
 }

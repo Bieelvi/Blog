@@ -22,7 +22,8 @@ class PostComment extends Model
     protected function casts(): array
     {
         return [
-            'created_at' => 'datetime:Y M j'
+            'created_at' => 'datetime:Y M j',
+            'updated_at' => 'datetime:Y M j'
         ];
     }
 

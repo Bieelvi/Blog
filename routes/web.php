@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/comments/{comment}/like', [PostCommentController::class, 'like'])->name('comments.like');
 
     Route::resource('post-comments', PostCommentController::class)->only([
-        'store'
+        'store', 'update', 'destroy'
     ]);
 
     Route::middleware('admin')->group(function () {

@@ -4,7 +4,7 @@ import LeftArrow from '@/Components/LeftArrow';
 import Article from '@/Components/Article';
 import Header from '@/Components/Header';
 
-export default function Show({ auth, post, postComments, reactions }) {
+export default function Show({ auth, post, postComments }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -32,7 +32,6 @@ export default function Show({ auth, post, postComments, reactions }) {
                             postModel={post}
                             postComments={postComments}
                             show={true}
-                            reactions={reactions}
                         />
                     </div>
                 </div>

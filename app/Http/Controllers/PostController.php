@@ -49,7 +49,10 @@ class PostController extends Controller
     {
         Post::create($request->all());
 
-        return Redirect::route('posts.index');
+        return Redirect::route('posts.index')->with([
+            'message' => 'Post added successfully',
+            'type' => 'success'
+        ]);;
     }
 
     /**
@@ -110,7 +113,10 @@ class PostController extends Controller
         Post::where('id', $id)
             ->update($request->all());
 
-        return Redirect::back();
+        return Redirect::back()->with([
+            'message' => 'Post updated successfully',
+            'type' => 'success'
+        ]);;
     }
 
     /**
@@ -122,7 +128,10 @@ class PostController extends Controller
 
         $post->delete();
 
-        return Redirect::route('posts.index');
+        return Redirect::route('posts.index')->with([
+            'message' => 'Post deleted successfully',
+            'type' => 'warning'
+        ]);;
     }
 
     public function search(Request $request): Response
@@ -150,7 +159,10 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->likes()->toggle($request->user()->id);
 
-        return Redirect::back();
+        return Redirect::back()->with([
+            'message' => 'Post liked/unliked successfully',
+            'type' => 'success'
+        ]);;
     }
 
     public function favorite(Request $request, string $id): RedirectResponse
@@ -158,6 +170,9 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->favorites()->toggle($request->user()->id);
 
-        return Redirect::back();
+        return Redirect::back()->with([
+            'message' => 'Post favorited/unfavorited successfully',
+            'type' => 'success'
+        ]);;
     }
 }

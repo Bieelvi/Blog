@@ -149,7 +149,7 @@ export default function CommentCard({ auth, commentary }) {
                 </Link>
                 
                 <span className="text-gray-500 dark:text-gray-400">
-                    {commentary.created_at != commentary.updated_at ? `edited at ${commentary.updated_at}` : null}
+                    {commentary.created_at != commentary.updated_at ? `${translate["edited at"]} ${commentary.updated_at}` : null}
                 </span>
             </div>
 

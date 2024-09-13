@@ -3,9 +3,12 @@ import Header from '@/Components/Header';
 import Pagination from '@/Components/Pagination';
 import PlusButton from '@/Components/PlusButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
 export default function Index({ auth, posts }) {
+    const { localeData } = usePage().props;
+    const { translate } = localeData;
+
     const { setData } = useForm({
         page: posts.current_page
     });
@@ -13,9 +16,9 @@ export default function Index({ auth, posts }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<Header content="Posts" />}
+            header={<Header content={translate['Posts']} />}
         >
-            <Head title="Posts" />
+            <Head title={translate['Posts']} />
 
             <div className="flex py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <Link href={route('posts.create')}>
@@ -24,7 +27,7 @@ export default function Index({ auth, posts }) {
                         color="white"
                         height="25px"
                         width="25px"
-                        text="Add new post"
+                        text={translate['Add new post']}
                     />
                 </Link>
             </div>

@@ -15,10 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            \App\Http\Middleware\InjectLocaleData::class,
         ]);
         $middleware->alias([
             'ownerpost' => \App\Http\Middleware\OwnerPost::class,
-            'admin' => \App\Http\Middleware\Admin::class
+            'admin' => \App\Http\Middleware\Admin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

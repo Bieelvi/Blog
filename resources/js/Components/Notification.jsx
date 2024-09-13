@@ -1,8 +1,12 @@
 import Success from "./Svgs/Success";
 import Error from "./Svgs/Error";
 import Warning from "./Svgs/Warning";
+import { usePage } from "@inertiajs/react";
 
 export default function Notification({ message = '', typeMessage = '' }) {
+    const { localeData } = usePage().props;
+    const { translate } = localeData;
+
     return (
         <div
             style={{ position: 'fixed', bottom: '10px', left: '40px' }}
@@ -12,9 +16,9 @@ export default function Notification({ message = '', typeMessage = '' }) {
         >
             {
                 {
-                    'success': <Success />,
-                    'error': <Error />,
-                    'warning': <Warning />
+                    'success': <Success text={translate["Check"]} />,
+                    'error': <Error text={translate["Error"]} />,
+                    'warning': <Warning text={translate["Warning"]} />
                 }[typeMessage]                
             }
 

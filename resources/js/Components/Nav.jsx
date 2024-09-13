@@ -3,13 +3,15 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import Avatar from './Avatar';
 import Divisor from './Divisor';
-import Bell from './Svgs/Bell';
 import SystemNotification from './SystemNotification';
 
 export default function Nav({ user }) {
+    const { localeData } = usePage().props;
+    const { translate } = localeData;
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -25,12 +27,12 @@ export default function Nav({ user }) {
 
                         <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <NavLink href={route('posts.index')} active={route().current('posts.index')}>
-                                Posts
+                                {translate["Posts"]}
                             </NavLink>
 
                             {user.role == 'Admin' ? 
                                 <NavLink href={route('site-admin.index')} active={route().current('site-admin.index')}>
-                                    Site admin
+                                    {translate["Admin"]}
                                 </NavLink>                            
                                 : null}
                         </div>
@@ -60,25 +62,25 @@ export default function Nav({ user }) {
                                     <Divisor />
 
                                     <Dropdown.Link>
-                                        Dashboard
+                                        {translate["Dashboard"]}
                                     </Dropdown.Link>
 
                                     <Dropdown.Link>
-                                        Notifications
+                                        {translate["Notifications"]}
                                     </Dropdown.Link>
 
                                     <Dropdown.Link href={route('posts.create')}>
-                                        Create post
+                                        {translate["Create post"]}
                                     </Dropdown.Link>
 
                                     <Dropdown.Link>
-                                        Settings
+                                        {translate["Settings"]}
                                     </Dropdown.Link>
 
                                     <Divisor />
 
                                     <Dropdown.Link href={route('logout')} method="post" as="button">
-                                        Log Out
+                                        {translate["Log out"]}
                                     </Dropdown.Link>
                                 </Dropdown.Content>
                             </Dropdown>
@@ -118,10 +120,10 @@ export default function Nav({ user }) {
             <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                 <div className="pt-2 pb-3 space-y-1">
                     <ResponsiveNavLink href={route('posts.index')} active={route().current('posts.index')}>
-                        Posts
+                        {translate["Posts"]}
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('site-admin.index')} active={route().current('site-admin.index')}>
-                        Site Admin
+                        {translate["Admin"]}
                     </ResponsiveNavLink>
                 </div>
 
@@ -134,25 +136,25 @@ export default function Nav({ user }) {
                         <Divisor />
 
                         <ResponsiveNavLink>
-                            Dashboard
+                            {translate["Dashboard"]}
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink>
-                            Notifications
+                            {translate["Notifications"]}
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink href={route('posts.create')}>
-                            Create post
+                            {translate["Create post"]}
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink>
-                            Settings
+                            {translate["Settings"]}
                         </ResponsiveNavLink>
 
                         <Divisor />
 
                         <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                            Log Out
+                            {translate["Log out"]}
                         </ResponsiveNavLink>
                     </div>
                 </div>

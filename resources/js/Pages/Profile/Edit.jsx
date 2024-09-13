@@ -2,17 +2,20 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import AvatarForm from './Partials/AvatarForm';
 import Header from '@/Components/Header';
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
+    const { localeData } = usePage().props;
+    const { translate } = localeData;
+
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<Header content="Profile" />}
+            header={<Header content={translate["Profile"]} />}
         >
-            <Head title="Profile" />
+            <Head title={translate["Profile"]} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">

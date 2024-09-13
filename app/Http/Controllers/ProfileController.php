@@ -39,7 +39,7 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with([
-            'message' => 'User edited successfully',
+            'message' => __("User edited successfully"),
             'type' => 'success'
         ]);;
     }
@@ -69,7 +69,7 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with([
-            'message' => 'Avatar edited successfully',
+            'message' => __("Avatar edited successfully"),
             'type' => 'success'
         ]);;
     }
@@ -93,7 +93,7 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/')->with([
-            'message' => 'User deleted successfully',
+            'message' => __("User deleted successfully"),
             'type' => 'success'
         ]);;
     }

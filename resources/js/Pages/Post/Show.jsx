@@ -1,10 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import LeftArrow from '@/Components/LeftArrow';
 import Article from '@/Components/Article';
 import Header from '@/Components/Header';
 
 export default function Show({ auth, post, postComments }) {
+    const { localeData } = usePage().props;
+    const { translate } = localeData;
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -19,7 +22,7 @@ export default function Show({ auth, post, postComments }) {
                         color="white"
                         height="25px"
                         width="25px"
-                        text='Back to list of posts'
+                        text={translate['Back to list of posts']}
                     />
                 </Link>
             </div>

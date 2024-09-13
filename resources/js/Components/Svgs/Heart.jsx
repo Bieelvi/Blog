@@ -1,6 +1,7 @@
-export default function Heart() {
+export default function Heart({ text = 'Heart' }) {
     return (
         <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <title>{text}</title>
             <path 
                 fillRule="evenodd" 
                 clipRule="evenodd" 

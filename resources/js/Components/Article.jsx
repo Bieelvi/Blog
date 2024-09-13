@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import RightArrow from "./RightArrow";
 import Avatar from "./Avatar";
 import parse from 'html-react-parser';
@@ -19,6 +19,9 @@ import Gear from './Svgs/Gear';
 import LikeFavorite from './LikeFavorite';
 
 export default function Article({ className = '', auth, postModel, show = false, postComments = null}) {
+    const { localeData } = usePage().props;
+    const { translate } = localeData;
+
     const [confirmingPostDeletion, setConfirmingPostDeletion] = useState(false);
     const [postComment, setPostComment] = useState(false);
 
@@ -86,20 +89,20 @@ export default function Article({ className = '', auth, postModel, show = false,
                                             type="button"
                                             className="inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
                                         >
-                                            <Gear />
+                                            <Gear text={translate["Configurations"]} />
                                         </button>
                                     </span>
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
                                     <Dropdown.Link href={route('posts.edit', { post: postModel.id })}>
-                                        Edit
+                                        {translate["Edit"]}
                                     </Dropdown.Link>
                                     <span
                                         className='block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out cursor-pointer'
                                         onClick={confirmPostDeletion}
                                     >
-                                        Delete
+                                        {translate["Delete"]}
                                     </span>
                                 </Dropdown.Content>
                             </Dropdown>
@@ -134,16 +137,16 @@ export default function Article({ className = '', auth, postModel, show = false,
                         <div className="flex justify item-center gap-1">
                             <div className="flex items-center text gap-1 text-sm">
                                 {postModel.comments_count}
-                                <Chat />
+                                <Chat text={translate["Commentarys"]} />
                             </div>
 
                             <div className="flex items-center text gap-1 text-sm">
                                 {postModel.likes_count}
-                                <Liked />
+                                <Liked text={translate["Likes"]} />
                             </div>
                         </div>
                         <Link className="flex font-bold text-indigo-600 gap-1" href={route("posts.show", postModel.id)}>
-                            Read article
+                            {translate["Read article"]}
                             <RightArrow
                                 className="font-bold text-indigo-600"
                                 id="rightarrow"
@@ -159,7 +162,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="flex items-center text gap-1 text-sm cursor-pointer" onClick={postCommenting}>
-                                <Chat />
+                                <Chat text={translate["Click here to comment"]} />
                                 {postModel.comments_count}
                             </div>
 
@@ -207,7 +210,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                             required
                             type="text"
                             className="mt-1 block w-full"
-                            placeholder="Write your comment"
+                            placeholder={translate["Write your commentary"]}
                             onChange={(e) => setData('comment', e.target.value)}
                         />
 
@@ -215,7 +218,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <PrimaryButton disabled={processing}>Comment</PrimaryButton>
+                        <PrimaryButton disabled={processing}>{translate["Comment"]}</PrimaryButton>
 
                         <Transition
                             show={recentlySuccessful}
@@ -224,7 +227,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                             leave="transition ease-in-out"
                             leaveTo="opacity-0"
                         >
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Commented.</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">{translate["Commented"]}</p>
                         </Transition>
                     </div>
                 </form>
@@ -241,14 +244,14 @@ export default function Article({ className = '', auth, postModel, show = false,
             <Modal show={confirmingPostDeletion} onClose={closeModal}>
                 <form onSubmit={deletePost} className="p-6">
                     <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        Are you sure you want to delete your post?
+                        {translate["Are you sure you want to delete your post?"]}
                     </h2>
 
                     <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+                        <SecondaryButton onClick={closeModal}>{translate["Cancel"]}</SecondaryButton>
 
                         <DangerButton className="ms-3" disabled={processing}>
-                            Delete Post
+                            {translate["Delete post"]}
                         </DangerButton>
                     </div>
                 </form>

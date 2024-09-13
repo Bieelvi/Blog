@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import TextArea from '@/Components/TextArea';
 import LeftArrow from '@/Components/LeftArrow';
 import { useRef } from 'react';
@@ -11,6 +11,9 @@ import EditorTinyMCE from '@/Components/EditorTinyMCE';
 import Header from '@/Components/Header';
 
 export default function Create({ auth }) {
+    const { localeData } = usePage().props;
+    const { translate } = localeData;
+
     const editorRef = useRef();
 
     const { data, setData, post, processing, errors } = useForm({
@@ -33,7 +36,7 @@ export default function Create({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<Header content="Create new post" />}
+            header={<Header content={translate["Create new post"]} />}
         >
             <Head title="Create new post" />
 
@@ -44,7 +47,7 @@ export default function Create({ auth }) {
                         color="white"
                         height="25px"
                         width="25px"
-                        text='Back to list of posts'
+                        text={translate["Back to list of posts"]}
                     />
                 </Link>
             </div>
@@ -54,7 +57,7 @@ export default function Create({ auth }) {
                     <div className="p-6 text-gray-900 dark:text-gray-100">
                         <form onSubmit={submit}>
                             <div>
-                                <InputLabel htmlFor="title" value="Title" />
+                                <InputLabel htmlFor="title" value={translate["Title"]} />
 
                                 <TextInput
                                     id="title"
@@ -72,14 +75,14 @@ export default function Create({ auth }) {
                                     "mt-1 text-sm text-right " +
                                     (data.title.length < 50 ? 'text-gray-600 dark:text-gray-400' : 'text-red-600 dark:text-red-400')
                                 }>
-                                    {data.title.length < 50 ? data.title.length : 50}/50 characters
+                                    {data.title.length < 50 ? data.title.length : 50}/50 {translate["characters"]}
                                 </p>
 
                                 <InputError message={errors.title} className="mt-2" />
                             </div>
 
                             <div className="mt-4">
-                                <InputLabel htmlFor="resume" value="Resume" />
+                                <InputLabel htmlFor="resume" value={translate["Resume"]} />
 
                                 <TextArea
                                     id="resume"
@@ -96,14 +99,14 @@ export default function Create({ auth }) {
                                     "mt-1 text-sm text-right " +
                                     (data.resume.length < 510 ? 'text-gray-600 dark:text-gray-400' : 'text-red-600 dark:text-red-400')
                                 }>
-                                    {data.resume.length < 510 ? data.resume.length : 510}/510 characters
+                                    {data.resume.length < 510 ? data.resume.length : 510}/510 {translate["characters"]}
                                 </p>
 
                                 <InputError message={errors.resume} className="mt-2" />
                             </div>
 
                             <div className='mt-4'>
-                                <InputLabel htmlFor="article" value="Article" />
+                                <InputLabel htmlFor="article" value={translate["Article"]} />
 
                                 <div className="mt-1 block w-full">
                                     <EditorTinyMCE
@@ -117,7 +120,7 @@ export default function Create({ auth }) {
                                     "mt-1 text-sm text-right " +
                                     (data.article.length < 65535 ? 'text-gray-600 dark:text-gray-400' : 'text-red-600 dark:text-red-400')
                                 }>
-                                    {data.article.length < 65535 ? data.article.length : 65535}/65535 characters
+                                    {data.article.length < 65535 ? data.article.length : 65535}/65535 {translate["characters"]}
                                 </p>
 
                                 <InputError message={errors.article} className="mt-2" />
@@ -125,7 +128,7 @@ export default function Create({ auth }) {
 
                             <div className="mt-4">
                                 <PrimaryButton onClick={setArticle} disabled={processing}>
-                                    Create
+                                    {translate["Create"]}
                                 </PrimaryButton>
                             </div>
                         </form>

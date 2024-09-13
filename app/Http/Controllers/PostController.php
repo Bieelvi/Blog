@@ -50,7 +50,7 @@ class PostController extends Controller
         Post::create($request->all());
 
         return Redirect::route('posts.index')->with([
-            'message' => 'Post added successfully',
+            'message' => __("Post added successfully"),
             'type' => 'success'
         ]);;
     }
@@ -114,7 +114,7 @@ class PostController extends Controller
             ->update($request->all());
 
         return Redirect::back()->with([
-            'message' => 'Post updated successfully',
+            'message' => __("Post updated successfully"),
             'type' => 'success'
         ]);;
     }
@@ -129,7 +129,7 @@ class PostController extends Controller
         $post->delete();
 
         return Redirect::route('posts.index')->with([
-            'message' => 'Post deleted successfully',
+            'message' => __("Post deleted successfully"),
             'type' => 'warning'
         ]);;
     }
@@ -160,7 +160,7 @@ class PostController extends Controller
         $post->likes()->toggle($request->user()->id);
 
         return Redirect::back()->with([
-            'message' => 'Post liked/unliked successfully',
+            'message' => __("Post liked/unliked successfully"),
             'type' => 'success'
         ]);;
     }
@@ -171,7 +171,7 @@ class PostController extends Controller
         $post->favorites()->toggle($request->user()->id);
 
         return Redirect::back()->with([
-            'message' => 'Post favorited/unfavorited successfully',
+            'message' => __("Post favorited/unfavorited successfully"),
             'type' => 'success'
         ]);;
     }

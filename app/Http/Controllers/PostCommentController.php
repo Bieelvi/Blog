@@ -27,7 +27,7 @@ class PostCommentController extends Controller
         );
 
         return Redirect::back()->with([
-            'message' => 'Commentary add successfully',
+            'message' => __("Commentary added successfully"),
             'type' => 'success'
         ]);
     }
@@ -41,7 +41,7 @@ class PostCommentController extends Controller
             ->update($request->all());
 
         return Redirect::back()->with([
-            'message' => 'Commentary edited successfully',
+            'message' => __("Commentary edited successfully"),
             'type' => 'success'
         ]);
     }
@@ -56,7 +56,7 @@ class PostCommentController extends Controller
         $postComment->delete();
 
         return Redirect::back()->with([
-            'message' => 'Commentary deleted successfully',
+            'message' => __("Commentary deleted successfully"),
             'type' => 'success'
         ]);
     }
@@ -67,7 +67,7 @@ class PostCommentController extends Controller
         $postComment->likes()->toggle($request->user()->id);
 
         return Redirect::back()->with([
-            'message' => 'Commentary liked/unliked successfully',
+            'message' => __("Commentary liked/unliked successfully"),
             'type' => 'success'
         ]);
     }

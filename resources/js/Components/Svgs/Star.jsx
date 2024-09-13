@@ -1,6 +1,7 @@
-export default function Star() {
+export default function Star({ text = 'Star' }) {
     return (
         <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <title>{text}</title>
             <path d="M12 2V4" stroke="#d9ff00" strokeWidth="1.5" strokeLinecap="round" />
             <path d="M12 20V22" stroke="#d9ff00" strokeWidth="1.5" strokeLinecap="round" />
             <path d="M2 12L4 12" stroke="#d9ff00" strokeWidth="1.5" strokeLinecap="round" />

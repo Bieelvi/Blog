@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 export default function Authenticated({ user, header, children }) {
-    const { flash } = usePage().props
+    const { flash } = usePage().props;
 
     const [flashMessage, setFlashMessage] = useState(null);
     const [flashType, setFlashType] = useState(null);

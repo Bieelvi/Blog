@@ -42,4 +42,10 @@ class PostComment extends Model
         return $this->belongsToMany(User::class, 'post_comment_likes')
             ->withTimestamps();
     }
+
+    public function notifications(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'post_notifications')
+            ->withTimestamps();
+    }
 }

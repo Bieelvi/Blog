@@ -11,9 +11,8 @@ import SystemNotification from './SystemNotification';
 export default function Nav({ user }) {
     const { localeData } = usePage().props;
     const { translate } = localeData;
-
+    
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,17 +29,17 @@ export default function Nav({ user }) {
                                 {translate["Posts"]}
                             </NavLink>
 
-                            {user.role == 'Admin' ? 
+                            {user.role == 'Admin' ?
                                 <NavLink href={route('site-admin.index')} active={route().current('site-admin.index')}>
                                     {translate["Admin"]}
-                                </NavLink>                            
+                                </NavLink>
                                 : null}
                         </div>
                     </div>
 
                     <div className="hidden sm:flex sm:items-center sm:ms-6">
-                        <SystemNotification />
-                        
+                        <SystemNotification user={user} />
+
                         <div className="ms-3 relative">
                             <Dropdown>
                                 <Dropdown.Trigger>
@@ -89,7 +88,7 @@ export default function Nav({ user }) {
 
                     <div className="-me-2 flex items-center sm:hidden">
                         <div className="mr-2">
-                            <SystemNotification />
+                            <SystemNotification user={user} />
                         </div>
 
                         <button

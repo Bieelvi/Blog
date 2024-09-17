@@ -17,13 +17,11 @@ class NewPostComment extends Notification implements ShouldQueue
      * Create a new notification instance.
      */
     public function __construct(
-        public Post $post, 
+        public Post $post,
         public PostComment $postComment
     ) {
         $this->post = $post;
         $this->postComment = $postComment;
-
-        $this->afterCommit();
     }
 
     /**
@@ -33,7 +31,7 @@ class NewPostComment extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -44,11 +42,11 @@ class NewPostComment extends Notification implements ShouldQueue
         $postUrl = url("/posts/{$this->post->id}");
 
         return (new MailMessage)
-                    ->greeting('Hello, dear.')
-                    ->line('A new comment has been added to the post.')
-                    ->action("View post {$this->post->title}", $postUrl)
-                    ->line($this->postComment->comment)
-                    ->line('Thank you for using our application!');
+            ->greeting('Hello, dear.')
+            ->line('A new comment has been added to the post.')
+            ->action("View post {$this->post->title}", $postUrl)
+            ->line($this->postComment->comment)
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -58,9 +56,6 @@ class NewPostComment extends Notification implements ShouldQueue
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            'post' => $this->post,
-            'postComment' => $this->postComment
-        ];
+        return [];
     }
 }

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostCommentRequest;
+use App\Jobs\ProcessPostNotification;
 use App\Models\Post;
 use App\Models\PostComment;
-use App\Notifications\NewPostComment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redirect;
 
 class PostCommentController extends Controller
@@ -21,9 +20,11 @@ class PostCommentController extends Controller
         $postComment = PostComment::create($request->all());
 
         $post = Post::find($postComment->post_id);
-        Notification::send(
-            $post->favorites, 
-            new NewPostComment($post, $postComment)
+        
+        ProcessPostNotification::dispatch(
+            $request->user()->id, 
+            $post,
+            $postComment
         );
 
         return Redirect::back()->with([

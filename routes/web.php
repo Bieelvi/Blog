@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -30,6 +31,11 @@ Route::middleware(['auth'])->group(function () {
         'store', 'update', 'destroy'
     ]);
 
+    route::resource('notifications', NotificationController::class)->only([
+        'index', 'show', 'destroy'
+    ]);
+    Route::post('/notifications/{notification}', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    
     Route::middleware('admin')->group(function () {
         Route::resource('site-admin', SiteAdminController::class);
     });

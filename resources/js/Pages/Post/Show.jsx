@@ -1,8 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
 import LeftArrow from '@/Components/LeftArrow';
-import Article from '@/Components/Article';
 import Header from '@/Components/Header';
+import Article from './Article';
 
 export default function Show({ auth, post, postComments }) {
     const { localeData } = usePage().props;

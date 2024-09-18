@@ -6,15 +6,11 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import TextArea from '@/Components/TextArea';
 import LeftArrow from '@/Components/LeftArrow';
-import { useRef } from 'react';
-import EditorTinyMCE from '@/Components/EditorTinyMCE';
 import Header from '@/Components/Header';
 
 export default function Create({ auth }) {
     const { localeData } = usePage().props;
     const { translate } = localeData;
-
-    const editorRef = useRef();
 
     const { data, setData, post, processing, errors } = useForm({
         user_id: auth.user.id,
@@ -28,10 +24,6 @@ export default function Create({ auth }) {
 
         post(route('posts.store'));
     };
-
-    const setArticle = () => {
-        setData('article', editorRef.current.getContent());
-    }
 
     return (
         <AuthenticatedLayout
@@ -108,13 +100,16 @@ export default function Create({ auth }) {
                             <div className='mt-4'>
                                 <InputLabel htmlFor="article" value={translate["Article"]} />
 
-                                <div className="mt-1 block w-full">
-                                    <EditorTinyMCE
-                                        editorRef={editorRef}
-                                        value={data.article}
-                                        id="article"
-                                    />
-                                </div>
+                                <TextArea
+                                    id="article"
+                                    name="article"
+                                    rows="5"
+                                    value={data.article}
+                                    maxLength='65535'
+                                    required
+                                    className="mt-1 block w-full"
+                                    onChange={(e) => setData('article', e.target.value)}
+                                />
 
                                 <p className={
                                     "mt-1 text-sm text-right " +
@@ -127,7 +122,7 @@ export default function Create({ auth }) {
                             </div>
 
                             <div className="mt-4">
-                                <PrimaryButton onClick={setArticle} disabled={processing}>
+                                <PrimaryButton disabled={processing}>
                                     {translate["Create"]}
                                 </PrimaryButton>
                             </div>

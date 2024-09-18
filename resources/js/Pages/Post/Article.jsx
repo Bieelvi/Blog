@@ -1,22 +1,22 @@
 import { useState } from 'react';
 import { Link, useForm, usePage } from "@inertiajs/react";
-import RightArrow from "./RightArrow";
-import Avatar from "./Avatar";
+import RightArrow from "../../Components/RightArrow";
+import Avatar from "../../Components/Avatar";
 import parse from 'html-react-parser';
 import Dropdown from '@/Components/Dropdown';
-import Modal from './Modal';
-import SecondaryButton from './SecondaryButton';
-import DangerButton from './DangerButton';
-import TextInput from './TextInput';
-import PrimaryButton from './PrimaryButton';
+import Modal from '../../Components/Modal';
+import SecondaryButton from '../../Components/SecondaryButton';
+import DangerButton from '../../Components/DangerButton';
+import TextInput from '../../Components/TextInput';
+import PrimaryButton from '../../Components/PrimaryButton';
 import { Transition } from '@headlessui/react';
-import InputError from './InputError';
-import CommentCard from './CommentCard';
-import LikeHeart from './LikeHeart';
-import Chat from './Svgs/Chat';
-import Liked from './Svgs/Liked';
-import Gear from './Svgs/Gear';
-import LikeFavorite from './LikeFavorite';
+import InputError from '../../Components/InputError';
+import CommentCard from '../../Components/CommentCard';
+import LikeHeart from '../../Components/LikeHeart';
+import Chat from '../../Components/Svgs/Chat';
+import Liked from '../../Components/Svgs/Liked';
+import Gear from '../../Components/Svgs/Gear';
+import LikeFavorite from '../../Components/LikeFavorite';
 
 export default function Article({ className = '', auth, postModel, show = false, postComments = null}) {
     const { localeData } = usePage().props;

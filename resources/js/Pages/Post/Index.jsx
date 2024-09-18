@@ -1,9 +1,9 @@
-import Article from '@/Components/Article';
 import Header from '@/Components/Header';
 import Pagination from '@/Components/Pagination';
 import PlusButton from '@/Components/PlusButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import Article from './Article';
 
 export default function Index({ auth, posts }) {
     const { localeData } = usePage().props;

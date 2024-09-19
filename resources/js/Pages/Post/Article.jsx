@@ -120,7 +120,7 @@ export default function Article({ className = '', auth, postModel, show = false,
             </div>
 
             <div>
-                <div className='text-1xl leading-tight text-gray-900 lg:mb-6 lg:text-1xl dark:text-white break-words'>
+                <div className='text-2xl leading-tight text-gray-900 lg:mb-6 lg:text-1xl dark:text-white break-words'>
                     {postModel.resume}
                 </div>
 

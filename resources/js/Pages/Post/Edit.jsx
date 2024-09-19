@@ -105,7 +105,6 @@ export default function Edit({ auth, post }) {
                                     name="article"
                                     value={data.article}
                                     className="mt-1 block w-full"
-                                    minHeight="500px"
                                     required
                                     onChange={(e) => setData('article', e || '')}
                                     textareaProps={{

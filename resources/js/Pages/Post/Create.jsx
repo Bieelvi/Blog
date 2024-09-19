@@ -101,23 +101,16 @@ export default function Create({ auth }) {
                             <div className='mt-4'>
                                 <InputLabel htmlFor="article" value={translate["Article"]} />
 
-                                {/* <TextArea
+                                <MDEditor
                                     id="article"
                                     name="article"
-                                    rows="5"
                                     value={data.article}
-                                    maxLength='65535'
-                                    required
                                     className="mt-1 block w-full"
-                                    onChange={(e) => setData('article', e.target.value)}
-                                /> */}
-
-                                <MDEditor 
-                                    id="article"
-                                    name="article"
-                                    value={data.article}
                                     required
                                     onChange={(e) => setData('article', e || '')}
+                                    textareaProps={{
+                                        maxLength: 65535
+                                    }}
                                 />
 
                                 <p className={

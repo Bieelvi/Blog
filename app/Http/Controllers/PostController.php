@@ -113,7 +113,7 @@ class PostController extends Controller
         Post::where('id', $id)
             ->update($request->all());
 
-        return Redirect::back()->with([
+        return Redirect::route('posts.show', $id)->with([
             'message' => __("Post updated successfully"),
             'type' => 'success'
         ]);;

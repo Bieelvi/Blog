@@ -1,5 +1,7 @@
 import React from 'react';
 import { router } from '@inertiajs/react';
+import PreviousButton from './PreviousButton';
+import NextButton from './NextButton';
 import PaginationButton from './PaginationButton';
 import HTMLReactParser from 'html-react-parser';
 
@@ -17,6 +19,16 @@ export default function Pagination({ links, currentPage, lastPage, setCurrentPag
             <ul className="inline-flex text-sm">
                 {links.map((link, index) => (
                     <li key={index}>
+                        {link.label == 'pagination.previous' ?
+                            <PreviousButton 
+                                disabled={currentPage == '1' ? 'disabled' : ''}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handlePageChange(link.url);
+                                }}
+                            />
+                        : null}
+
                         {link.label != 'pagination.previous' && link.label != 'pagination.next' ? 
                             <div className="flex items-center gap-x-1">
                                 <PaginationButton 
@@ -31,6 +43,16 @@ export default function Pagination({ links, currentPage, lastPage, setCurrentPag
                                     }}
                                 />
                             </div>
+                        : null}
+
+                        {link.label == 'pagination.next' ?
+                            <NextButton 
+                                disabled={currentPage == lastPage ? 'disabled' : ''}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handlePageChange(link.url);
+                                }}
+                            />
                         : null}
                     </li>
                 ))}

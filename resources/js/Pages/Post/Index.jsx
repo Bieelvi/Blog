@@ -43,16 +43,26 @@ export default function Index({ auth, posts }) {
                                 postModel={post}
                             />
                         ))}
+
+                        {posts.data.length == 0 ? 
+                            <div className="text-center">
+                                <span className="mb-4 text-2xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white break-words">
+                                    {translate["Not found articles"]}
+                                </span>
+                            </div>
+                        : null}
                     </div>
                 </div>
             </div>
 
-            <Pagination
-                links={posts.links}
-                currentPage={posts.current_page}
-                lastPage={posts.last_page}
-                setCurrentPage={(page) => setData('page', page)}
-            />
+            {posts.data.length >= 1 ?
+                <Pagination
+                    links={posts.links}
+                    currentPage={posts.current_page}
+                    lastPage={posts.last_page}
+                    setCurrentPage={(page) => setData('page', page)}
+                />            
+            : null}
         </AuthenticatedLayout>
     );
 }

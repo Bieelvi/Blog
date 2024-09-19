@@ -7,6 +7,7 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import TextArea from '@/Components/TextArea';
 import LeftArrow from '@/Components/LeftArrow';
 import Header from '@/Components/Header';
+import MDEditor from '@uiw/react-md-editor';
 
 export default function Create({ auth }) {
     const { localeData } = usePage().props;
@@ -100,7 +101,7 @@ export default function Create({ auth }) {
                             <div className='mt-4'>
                                 <InputLabel htmlFor="article" value={translate["Article"]} />
 
-                                <TextArea
+                                {/* <TextArea
                                     id="article"
                                     name="article"
                                     rows="5"
@@ -109,6 +110,14 @@ export default function Create({ auth }) {
                                     required
                                     className="mt-1 block w-full"
                                     onChange={(e) => setData('article', e.target.value)}
+                                /> */}
+
+                                <MDEditor 
+                                    id="article"
+                                    name="article"
+                                    value={data.article}
+                                    required
+                                    onChange={(e) => setData('article', e || '')}
                                 />
 
                                 <p className={

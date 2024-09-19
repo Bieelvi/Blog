@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useForm, usePage } from "@inertiajs/react";
 import RightArrow from "../../Components/RightArrow";
 import Avatar from "../../Components/Avatar";
-import parse from 'html-react-parser';
 import Dropdown from '@/Components/Dropdown';
 import Modal from '../../Components/Modal';
 import SecondaryButton from '../../Components/SecondaryButton';
@@ -17,6 +16,7 @@ import Chat from '../../Components/Svgs/Chat';
 import Liked from '../../Components/Svgs/Liked';
 import Gear from '../../Components/Svgs/Gear';
 import LikeFavorite from '../../Components/LikeFavorite';
+import ShowMarkdown from './ShowMarkdown';
 
 export default function Article({ className = '', auth, postModel, show = false, postComments = null}) {
     const { localeData } = usePage().props;
@@ -126,7 +126,9 @@ export default function Article({ className = '', auth, postModel, show = false,
 
                 {show ?
                     <div className="my-4 leading-tight text-gray-900 lg:mb-6 lg:text-1xl dark:text-white break-words">
-                        {parse(postModel.article)}
+                        <ShowMarkdown 
+                            postModel={postModel} 
+                        />
                     </div>
                     : null}
             </div>

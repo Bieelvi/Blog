@@ -58,7 +58,7 @@ export default function SystemNotification({ user }) {
             .listen('ProcessedNotification', (e) => {
                 if (e.systemNotification !== null) {
                     setSystemNotifications((prevNotifications) => [e.systemNotification, ...prevNotifications]);
-                    setUnreads((prevUnreads) => [prevUnreads + 1]);
+                    setUnreads((prevUnreads) => prevUnreads + 1);
                 }
             });
     };
@@ -100,8 +100,8 @@ export default function SystemNotification({ user }) {
             >
                 <Bell text={translate["Notifications"]} />
 
-                <div className="absolute right-[-7px] top-[-7px] text-white text-sm px-[6px] rounded-full bg-red-600 flex items-center justify-center">
-                    {unreads > 0 ? unreads > 99 ? `${unreads}+` : unreads : ''}
+                <div className="absolute right-[-7px] top-[-7px] text-white text-[10px] px-[6px] rounded-full bg-red-600 flex items-center justify-center">
+                    {unreads > 0 ? unreads > 99 ? `99+` : unreads : ''}
                 </div>
             </div>
 

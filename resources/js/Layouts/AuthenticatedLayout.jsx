@@ -7,6 +7,9 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 export default function Authenticated({ user, header, children }) {
+    const { localeData } = usePage().props;
+    const { translate } = localeData;
+    
     const { flash } = usePage().props;
 
     const [flashMessage, setFlashMessage] = useState(null);
@@ -28,7 +31,7 @@ export default function Authenticated({ user, header, children }) {
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
-            <Nav user={user} />
+            <Nav user={user} translate={translate} />
 
             {header && header}
 

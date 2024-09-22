@@ -115,7 +115,7 @@ export default function SystemNotification({ user }) {
                 leaveTo="opacity-0 scale-95"
             >
                 <div
-                    className="absolute top-[45px] right-[-90px] w-[300px] z-50 py-2 rounded dark:bg-gray-700 dark:text-white transition duration-150 ease-in-out"
+                    className="absolute top-[45px] right-[-40px] md:right-[-90px] w-[300px] z-50 py-2 rounded dark:bg-gray-700 dark:text-white transition duration-150 ease-in-out"
                     style={{ height: 'auto', maxHeight: '91vh', overflowY: 'auto' }}
                 >
                     {systemNotifications != null ? systemNotifications.map((systemNotification, index) => (

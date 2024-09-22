@@ -88,7 +88,7 @@ export default function Nav({ user }) {
 
                     <div className="-me-2 flex items-center sm:hidden">
                         <div className="mr-2">
-                            <SystemNotification user={user} />
+                            {/* <SystemNotification user={user} /> */}
                         </div>
 
                         <button

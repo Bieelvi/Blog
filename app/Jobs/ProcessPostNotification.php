@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Events\ProcessedNotification;
 use App\Models\Post;
 use App\Models\PostComment;
+use App\Models\SystemNotification;
 use App\Notifications\NewPostComment;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -37,13 +38,21 @@ class ProcessPostNotification implements ShouldQueue
         );
 
         foreach ($this->post->favorites as $favorite) {
-            $this->postComment->notifications()->attach($favorite->id);
+            $systemNotification = SystemNotification::create([
+                'user_id' => $favorite->id,
+                'title' => "New commentary",
+                'content' => __("New commentary added to the post you favorited"),
+                'view' => route('posts.show', $this->post->id)
+            ]);
+
+            if ($favorite->id == $this->user_id) {
+                $processedSystemNotification = $systemNotification;
+            }
         }
 
         ProcessedNotification::dispatch(
             $this->user_id,
-            $this->post,
-            $this->postComment
+            isset($processedSystemNotification) ? $processedSystemNotification : null
         );
     }
 }

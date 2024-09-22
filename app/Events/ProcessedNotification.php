@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\SystemNotification;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -17,10 +18,10 @@ class ProcessedNotification implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public int $user_id)
-    {
-        //
-    }
+    public function __construct(
+        public int $user_id, 
+        public null|SystemNotification $systemNotification
+    ) {}
 
     /**
      * Get the channels the event should broadcast on.

@@ -1,77 +1,180 @@
 import { Link, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useRef } from "react";
+import Dropdown from "./Dropdown";
+import Bullet from "./Svgs/Bullet";
 import Bell from "./Svgs/Bell";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import Divisor from "./Divisor";
+import { Transition } from "@headlessui/react";
+import Options from "./Svgs/Options";
 
-export default function SystemNotification({ user, notifications = [] }) {
+export default function SystemNotification({ user }) {
     const { localeData } = usePage().props;
     const { translate } = localeData;
 
-    // const webSocketChannel = `Processed.Notification.${user.id}`;
-    
-    // const connectWebSocket = () => {
-    //     window.Echo.private(webSocketChannel)
-    //         .listen('ProcessedNotification', (e) => {
-    //             console.log(e);
-    //         });
-    // }
+    const dropdownRef = useRef(null);
 
-    // useEffect(() => {
-    //     connectWebSocket();
+    const [open, setOpen] = useState(false);
+    const [systemNotifications, setSystemNotifications] = useState(null);
+    const [unreads, setUnreads] = useState(0);
 
-    //     return () => {
-    //         window.Echo.leave(webSocketChannel);
-    //     }
-    // }, []);
+    const markAsRead = (id) => {
+        axios
+            .post(route("notifications.markAsRead", { notification: id }))
+            .then(response => {
+                const updatedNotifications = systemNotifications.map(notification => {
+                    if (notification.id === id) {
+                        notification.read_at = true;
+
+                        return notification;
+                    }
+
+                    return notification;
+                })
+
+                setSystemNotifications(updatedNotifications);
+                setUnreads(countUnreads(updatedNotifications));
+            });
+    };
+
+    const countUnreads = (data) => {
+        const response = data.filter(item => item.read_at === null);
+
+        return response.length;
+    };
+
+    const getSystemNotifications = () => axios
+        .get(route("notifications.index"))
+        .then((response) => {
+            setSystemNotifications(response.data);
+            setUnreads(countUnreads(response.data));
+        });
+
+    const webSocketChannel = `Processed.Notification.${user.id}`;
+
+    const connectWebSocket = () => {
+        window.Echo.private(webSocketChannel)
+            .listen('ProcessedNotification', (e) => {
+                if (e.systemNotification !== null) {
+                    setSystemNotifications((prevNotifications) => [e.systemNotification, ...prevNotifications]);
+                    setUnreads((prevUnreads) => [prevUnreads + 1]);
+                }
+            });
+    };
+
+    const deleteItem = (id) => {
+        axios
+            .delete(route("notifications.destroy", { notification: id }))
+            .then(response => {
+                const updatedNotifications = systemNotifications.filter(notification => notification.id !== id);
+
+                setSystemNotifications(updatedNotifications);
+                setUnreads(countUnreads(updatedNotifications));
+            });
+    };
+
+    useEffect(() => {
+        getSystemNotifications();
+        connectWebSocket();
+
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.Echo.leave(webSocketChannel);
+        };
+    }, [dropdownRef]);
 
     return (
-        <div className="ms-3 relative">
-            <Menu as="div" className="relative inline-block text-left">
-                <div>
-                    <MenuButton className="inline-flex w-full justify-center py-2">
-                        <Bell text={translate["Notifications"]} />
-                    </MenuButton>
+        <div ref={dropdownRef} className="relative">
+            <div
+                className="relative cursor-pointer"
+                onClick={(e) => setOpen(!open)}
+            >
+                <Bell text={translate["Notifications"]} />
+
+                <div className="absolute right-[-7px] top-[-7px] text-white text-sm px-[6px] rounded-full bg-red-600 flex items-center justify-center">
+                    {unreads > 0 ? unreads > 99 ? `${unreads}+` : unreads : ''}
                 </div>
+            </div>
 
-                <MenuItems
-                    transition
-                    className="overflow-y-scroll absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                    style={{ height: '400px' }}
+            <Transition
+                show={open}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+            >
+                <div
+                    className="absolute top-[45px] right-[-90px] w-[300px] z-50 py-2 rounded dark:bg-gray-700 dark:text-white transition duration-150 ease-in-out"
+                    style={{ height: 'auto', maxHeight: '91vh', overflowY: 'auto' }}
                 >
-                    <div className="py-1">
-                        {notifications.length > 0 ? notifications.map((notification, index) => (
-                            <MenuItem key={index}>
-                                <div className="flex flex-col">
-                                    <div className="flex justify-between">
-                                        <span className="break-words block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
-                                            New
-                                        </span>
-                                    </div>
+                    {systemNotifications != null ? systemNotifications.map((systemNotification, index) => (
+                        <div key={index} className="break-words pl-4 pr-1 py-3 text-sm hover:bg-gray-800">
+                            <span className="flex justify-between dark:text-gray-300 items-center break-words">
+                                <Link
+                                    href={systemNotification.view}
+                                    method='get'
+                                    as="button"
+                                    className="flex text-left"
+                                    onClick={() => markAsRead(systemNotification.id)}
+                                >
+                                    <span className="flex items-center">
+                                        {systemNotification.content}
 
-                                    <Link
-                                        href="#"
-                                        // method='post'
-                                        // as="button"
-                                        className="flex"
-                                    >
-                                        <span className="break-words block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
-                                            {/* {notification.data.postComment.comment} */}
-                                        </span>
-                                    </Link>
+                                        {systemNotification.read_at == null ?
+                                            <Bullet
+                                                width="50px"
+                                                height="50px"
+                                            />
+                                            : null}
+                                    </span>
+                                </Link>
 
-                                    <Divisor />
+                                <div className="cursor-pointer">
+                                    <Dropdown>
+                                        <Dropdown.Trigger>
+                                            <Options text={translate["Configurations"]} />
+                                        </Dropdown.Trigger>
+
+                                        <Dropdown.Content>
+                                            <span
+                                                className='block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out cursor-pointer'
+                                                onClick={() => markAsRead(systemNotification.id)}
+                                            >
+
+                                                {translate["Mark as read"]}
+                                            </span>
+
+                                            <span
+                                                className='block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out cursor-pointer'
+                                                onClick={() => deleteItem(systemNotification.id)}
+                                            >
+
+                                                {translate["Delete notification"]}
+                                            </span>
+                                        </Dropdown.Content>
+                                    </Dropdown>
                                 </div>
-                            </MenuItem>
-                        )) :
-                            <MenuItem>
-                                <a>
-                                    Without notifications
-                                </a>
-                            </MenuItem>
-                        }
-                    </div>
-                </MenuItems>
-            </Menu>
+                            </span>
+                        </div>
+                    )) :
+                        <div className="p-2 break-words text-sm rounded">
+                            {translate["Without notifications"]}
+                        </div>
+                    }
+                </div>
+            </Transition>
+
         </div>
     );
 }

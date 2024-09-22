@@ -210,5 +210,9 @@
   "User deleted successfully": "Usuário deletada com sucesso!",
   "Edit commentary": "Editar comentário",
   "edited at": "editado as",
-  "Not found articles": "Nenhum artigo encontrado"
+  "Not found articles": "Nenhum artigo encontrado",
+  "New comment added to the post you favorited": "Novo comentário adicionado à postagem que você favoritou",
+  "Mark as read": "Marcar como lido",
+  "Delete notification": "Deletar notificação",
+  "Without notifications": "Sem notiicações no momento"
 }

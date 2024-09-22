@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_notifications', function (Blueprint $table) {
+        Schema::create('system_notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_comment_id')->references('id')->on('post_comments')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('title');
+            $table->string('content');
+            $table->string('view');
             $table->dateTime('read_at')->nullable();
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_notifications');
+        Schema::dropIfExists('system_notifications');
     }
 };

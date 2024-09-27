@@ -1,5 +1,5 @@
-export default function Divisor() {
+export default function Divisor({ className = '' }) {
     return (
-        <div className="mr-4 ml-3 border-b border-gray-100 dark:border-indigo-600"></div>
+        <div className={`border-b border-gray-100 dark:border-indigo-600 ` + className}></div>
     );
 }

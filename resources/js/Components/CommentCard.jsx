@@ -12,10 +12,7 @@ import TextInput from "./TextInput";
 import InputError from "./InputError";
 import PrimaryButton from "./PrimaryButton";
 
-export default function CommentCard({ auth, commentary }) {
-    const { localeData } = usePage().props;
-    const { translate } = localeData;
-
+export default function CommentCard({ auth, commentary, translate }) {
     const [confirmingCommentaryDeletion, setConfirmingCommentaryDeletion] = useState(false);
     const [ editingCommentary, setEditingCommentary ] = useState(false);
 
@@ -25,25 +22,13 @@ export default function CommentCard({ auth, commentary }) {
         user_id: commentary.user.id
     });
 
-    const confirmPostDeletion = () => {
-        setConfirmingCommentaryDeletion(true);
-    };
-
     const deleteCommentary = (e) => {
         e.preventDefault();
 
         destroy(route('post-comments.destroy', { post_comment: commentary.id }), {
-            onSuccess: () => closeModal()
+            onSuccess: () => setConfirmingCommentaryDeletion(false)
         });
     };
-
-    const closeModal = () => {
-        setConfirmingCommentaryDeletion(false);
-    };
-
-    const editCommentary = () => {
-        setEditingCommentary(true);
-    }
 
     const submit = (e) => {
         e.preventDefault();
@@ -93,14 +78,14 @@ export default function CommentCard({ auth, commentary }) {
                         <Dropdown.Content>
                             <span
                                 className='block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out cursor-pointer'
-                                onClick={editCommentary}
+                                onClick={() => setEditingCommentary(true)}
                             >
                                 {translate["Edit"]}
                             </span>
 
                             <span
                                 className='block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out cursor-pointer'
-                                onClick={confirmPostDeletion}
+                                onClick={() => setConfirmingCommentaryDeletion(true)}
                             >
                                 {translate["Delete"]}
                             </span>
@@ -130,7 +115,7 @@ export default function CommentCard({ auth, commentary }) {
                             <PrimaryButton disabled={processing}>{translate["Edit commentary"]}</PrimaryButton>
                         </div>
                     </form>
-                    : data.comment }
+                    : commentary.comment }
             </div>
 
             <div className="flex justify-between items-center gap-3">
@@ -153,14 +138,14 @@ export default function CommentCard({ auth, commentary }) {
                 </span>
             </div>
 
-            <Modal show={confirmingCommentaryDeletion} onClose={closeModal}>
+            <Modal show={confirmingCommentaryDeletion} onClose={() => setConfirmingCommentaryDeletion(false)}>
                 <form onSubmit={deleteCommentary} className="p-6">
                     <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                         {translate["Are you sure you want to delete your commentary?"]}
                     </h2>
 
                     <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>{translate["Cancel"]}</SecondaryButton>
+                        <SecondaryButton onClick={() => setConfirmingCommentaryDeletion(false)}>{translate["Cancel"]}</SecondaryButton>
 
                         <DangerButton className="ms-3" disabled={processing}>
                             {translate["Delete commentary"]}

@@ -17,11 +17,9 @@ import Liked from '../../Components/Svgs/Liked';
 import Gear from '../../Components/Svgs/Gear';
 import LikeFavorite from '../../Components/LikeFavorite';
 import ShowMarkdown from './ShowMarkdown';
+import Divisor from '@/Components/Divisor';
 
-export default function Article({ className = '', auth, postModel, show = false, postComments = null}) {
-    const { localeData } = usePage().props;
-    const { translate } = localeData;
-
+export default function Article({ className = '', auth, postModel, show = false, postComments, translate}) {
     const [confirmingPostDeletion, setConfirmingPostDeletion] = useState(false);
     const [postComment, setPostComment] = useState(false);
 
@@ -31,28 +29,14 @@ export default function Article({ className = '', auth, postModel, show = false,
         user_id: auth.user.id
     });
 
-    const confirmPostDeletion = () => {
-        setConfirmingPostDeletion(true);
-    };
-
-    const postCommenting = () => {
-        setPostComment(postComment ? false : true);
-    };
-
     const deletePost = (e) => {
         e.preventDefault();
 
         destroy(route('posts.destroy', { post: postModel.id }), {
             preserveScroll: true,
-            onSuccess: () => closeModal()
+            onSuccess: () => setConfirmingPostDeletion(false)
         });
     };
-
-    const closeModal = () => {
-        setConfirmingPostDeletion(false);
-    };
-
-    const allowOptions = auth.user.id == postModel.user.id || ['Admin', 'Moderator'].includes(auth.user.role);
 
     const submit = (e) => {
         e.preventDefault();
@@ -62,6 +46,8 @@ export default function Article({ className = '', auth, postModel, show = false,
             onFinish: () => { reset('comment') },
         });
     };
+
+    const allowOptions = auth.user.id == postModel.user.id || ['Admin', 'Moderator'].includes(auth.user.role);
 
     return (
         <article className={"p-3 w-full rounded-[10px] dark:bg-gray-800 format format-sm sm:format-base lg:format-lg format-blue dark:format-invert " + className}>
@@ -100,7 +86,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                                     </Dropdown.Link>
                                     <span
                                         className='block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out cursor-pointer'
-                                        onClick={confirmPostDeletion}
+                                        onClick={() => setConfirmingPostDeletion(true)}
                                     >
                                         {translate["Delete"]}
                                     </span>
@@ -117,15 +103,19 @@ export default function Article({ className = '', auth, postModel, show = false,
                         </Link>
                         : postModel.title}
                 </h3>
+
+                {show && <Divisor />}
             </div>
 
             <div>
-                <div className='text-2xl leading-tight text-gray-900 lg:mb-6 lg:text-1xl dark:text-white break-words'>
+                <div className='text-1xl leading-tight text-gray-900 lg:mb-6 dark:text-white break-words'>
                     {postModel.resume}
                 </div>
 
+                {show && <Divisor />}
+
                 {show ?
-                    <div className="my-4 leading-tight text-gray-900 lg:mb-6 lg:text-1xl dark:text-white break-words">
+                    <div className="my-4 leading-tight text-gray-900 lg:mb-6 dark:text-white break-words">
                         <ShowMarkdown 
                             postModel={postModel} 
                         />
@@ -163,7 +153,7 @@ export default function Article({ className = '', auth, postModel, show = false,
                 {show ?
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="flex items-center text gap-1 text-sm cursor-pointer" onClick={postCommenting}>
+                            <div className="flex items-center text gap-1 text-sm cursor-pointer" onClick={() => setPostComment(postComment ? false : true)}>
                                 <Chat text={translate["Click here to comment"]} />
                                 {postModel.comments_count}
                             </div>
@@ -240,17 +230,18 @@ export default function Article({ className = '', auth, postModel, show = false,
                     auth={auth}
                     commentary={c}
                     key={index}
+                    translate={translate}
                 />
             ))}
 
-            <Modal show={confirmingPostDeletion} onClose={closeModal}>
+            <Modal show={confirmingPostDeletion} onClose={() => setConfirmingPostDeletion(false)}>
                 <form onSubmit={deletePost} className="p-6">
                     <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                         {translate["Are you sure you want to delete your post?"]}
                     </h2>
 
                     <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>{translate["Cancel"]}</SecondaryButton>
+                        <SecondaryButton onClick={() => setConfirmingPostDeletion(false)}>{translate["Cancel"]}</SecondaryButton>
 
                         <DangerButton className="ms-3" disabled={processing}>
                             {translate["Delete post"]}

@@ -41,6 +41,7 @@ export default function Index({ auth, posts }) {
                                 key={index}
                                 auth={auth}
                                 postModel={post}
+                                translate={translate}
                             />
                         ))}
 

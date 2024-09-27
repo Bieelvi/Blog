@@ -35,6 +35,7 @@ export default function Show({ auth, post, postComments }) {
                             postModel={post}
                             postComments={postComments}
                             show={true}
+                            translate={translate}
                         />
                     </div>
                 </div>

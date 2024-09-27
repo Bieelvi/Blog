@@ -56,7 +56,7 @@ export default function Nav({ user, translate }) {
                                         {user.name}
                                     </Dropdown.Link>
 
-                                    <Divisor />
+                                    <Divisor className="mr-4 ml-3" />
 
                                     <Dropdown.Link>
                                         {translate["Dashboard"]}
@@ -74,7 +74,7 @@ export default function Nav({ user, translate }) {
                                         {translate["Settings"]}
                                     </Dropdown.Link>
 
-                                    <Divisor />
+                                    <Divisor className="mr-4 ml-3" />
 
                                     <Dropdown.Link href={route('logout')} method="post" as="button">
                                         {translate["Log out"]}
@@ -130,7 +130,7 @@ export default function Nav({ user, translate }) {
                             {user.name}
                         </ResponsiveNavLink>
 
-                        <Divisor />
+                        <Divisor className="mr-4 ml-3" />
 
                         <ResponsiveNavLink>
                             {translate["Dashboard"]}
@@ -148,7 +148,7 @@ export default function Nav({ user, translate }) {
                             {translate["Settings"]}
                         </ResponsiveNavLink>
 
-                        <Divisor />
+                        <Divisor className="mr-4 ml-3" />
 
                         <ResponsiveNavLink method="post" href={route('logout')} as="button">
                             {translate["Log out"]}

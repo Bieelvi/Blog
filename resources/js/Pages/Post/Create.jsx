@@ -8,6 +8,7 @@ import TextArea from '@/Components/TextArea';
 import LeftArrow from '@/Components/LeftArrow';
 import Header from '@/Components/Header';
 import MDEditor from '@uiw/react-md-editor';
+import './../../../css/css.css';
 
 export default function Create({ auth }) {
     const { localeData } = usePage().props;
@@ -100,7 +101,7 @@ export default function Create({ auth }) {
 
                             <div className='mt-4'>
                                 <InputLabel htmlFor="article" value={translate["Article"]} />
-
+                                
                                 <MDEditor
                                     id="article"
                                     name="article"

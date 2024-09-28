@@ -7,7 +7,7 @@ import rehypeRaw from 'rehype-raw';
 export default function ShowMarkdown({ postModel, ...props }) {
     return (
         <Markdown
-            h1= 'h2'
+            h1='h3'
             className="prose dark:prose-invert max-w-none"
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw]}

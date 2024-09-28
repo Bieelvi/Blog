@@ -8,6 +8,7 @@ import TextArea from '@/Components/TextArea';
 import LeftArrow from '@/Components/LeftArrow';
 import Header from '@/Components/Header';
 import MDEditor from '@uiw/react-md-editor';
+import './../../../css/css.css';
 
 export default function Edit({ auth, post }) {
     const { localeData } = usePage().props;

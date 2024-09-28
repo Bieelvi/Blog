@@ -1,3 +1,30 @@
+.w-md-editor-toolbar {
+    padding: 15px 0 15px 0 !important;
+    background-color: rgb(17 24 39 / 1) !important;
+}
+
+.w-md-editor-toolbar svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.w-md-editor-toolbar-divider {
+    height: 20px !important;
+    margin: 2px 3px 0 3px !important;
+}
+
+.w-md-editor-toolbar li > button:hover, .w-md-editor-toolbar li > button:focus {
+    background-color: transparent !important;
+}
+
+.w-md-editor-toolbar li.active > button {
+    background-color: transparent !important;
+}
+
+.w-md-editor, .wmde-markdown {
+    background-color: rgb(17 24 39 / 1) !important;
+}
+
 ::-webkit-scrollbar {
     width: 12px;
 }

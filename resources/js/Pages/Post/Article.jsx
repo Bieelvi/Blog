@@ -103,16 +103,12 @@ export default function Article({ className = '', auth, postModel, show = false,
                         </Link>
                         : postModel.title}
                 </h3>
-
-                {show && <Divisor />}
             </div>
 
             <div>
                 <div className='text-1xl leading-tight text-gray-900 lg:mb-6 dark:text-white break-words'>
                     {postModel.resume}
                 </div>
-
-                {show && <Divisor />}
 
                 {show ?
                     <div className="my-4 leading-tight text-gray-900 lg:mb-6 dark:text-white break-words">

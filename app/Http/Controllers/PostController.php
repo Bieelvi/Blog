@@ -175,4 +175,26 @@ class PostController extends Controller
             'type' => 'success'
         ]);;
     }
+
+    /**
+     * Display the favorites resource.
+     */
+    public function favorites(Request $request): Response
+    {
+        $posts = Post::with([
+            'user',
+            'comments' => ['user'],
+            'likes'
+        ])
+        ->withCount(['likes', 'comments'])
+        ->withCount(['likes as liked' => fn($q) => $q->where('user_id', $request->user()->id)])
+        ->withCasts(['liked' => 'boolean'])
+        ->whereHas('favorites', fn($q) => $q->where('user_id', $request->user()->id))
+        ->latest('created_at')
+        ->paginate(15);
+            
+        return Inertia::render('Post/Favorites', compact(
+            'posts'
+        ));
+    }
 }

@@ -4,7 +4,7 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import { Head, usePage } from '@inertiajs/react';
 import AvatarForm from './Partials/AvatarForm';
-import Header from '@/Components/Header';
+import ProfileHeader from './Partials/ProfileHeader';
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     const { localeData } = usePage().props;
@@ -13,7 +13,7 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<Header content={translate["Profile"]} />}
+            header={<ProfileHeader translate={translate} />}
         >
             <Head title={translate["Profile"]} />
 

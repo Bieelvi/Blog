@@ -1,8 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import LeftArrow from '@/Components/LeftArrow';
 import Header from '@/Components/Header';
 import Article from './Article';
+import { Button } from '@headlessui/react';
 
 export default function Show({ auth, post, postComments }) {
     const { localeData } = usePage().props;
@@ -16,15 +17,15 @@ export default function Show({ auth, post, postComments }) {
             <Head title={post.title} />
 
             <div className="flex py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <Link href={route('posts.index')}>
+                <Button onClick={() => window.history.back()}>
                     <LeftArrow
                         id="leftArrow"
                         color="white"
                         height="25px"
                         width="25px"
-                        text={translate['Back to list of posts']}
+                        text={translate['Back']}
                     />
-                </Link>
+                </Button>
             </div>
 
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

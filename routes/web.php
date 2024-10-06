@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts-search', [PostController::class, 'search'])->name('posts.search');
     Route::post('/posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
     Route::post('/posts/{post}/favorite', [PostController::class, 'favorite'])->name('posts.favorite');
+    Route::get('/posts/favorites/show', [PostController::class, 'favorites'])->name('posts.favorites');
 
     Route::post('/comments/{comment}/like', [PostCommentController::class, 'like'])->name('comments.like');
 

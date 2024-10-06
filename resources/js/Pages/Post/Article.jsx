@@ -17,7 +17,6 @@ import Liked from '../../Components/Svgs/Liked';
 import Gear from '../../Components/Svgs/Gear';
 import LikeFavorite from '../../Components/LikeFavorite';
 import ShowMarkdown from './ShowMarkdown';
-import Divisor from '@/Components/Divisor';
 
 export default function Article({ className = '', auth, postModel, show = false, postComments, translate}) {
     const [confirmingPostDeletion, setConfirmingPostDeletion] = useState(false);
@@ -57,9 +56,9 @@ export default function Article({ className = '', auth, postModel, show = false,
                         <Avatar user={postModel.user} />
 
                         <div>
-                            <a href="#" rel="author" className="font-bold text-gray-900 dark:text-white">
+                            <Link href={route('profile.show', { id: postModel.user.id })} rel="author" className="font-bold text-gray-900 dark:text-white">
                                 {postModel.user.name}
-                            </a>
+                            </Link>
                             <p className="text-gray-500 dark:text-gray-400">
                                 {postModel.created_at}
                             </p>

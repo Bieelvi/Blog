@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +16,54 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    /**
+     * Display the specified resource.
+     */
+    public function show(Request $request, string $id): Response
+    {
+        $user = User::find($id);
+
+        $posts = Post::with([
+                'user',
+                'comments' => ['user'],
+                'likes'
+            ])
+            ->withCount(['likes', 'comments'])
+            ->withCount(['likes as liked' => fn($q) => $q->where('user_id', $user->id)])
+            ->withCasts(['liked' => 'boolean'])
+            ->where('user_id', $user->id)
+            ->latest('created_at')
+            ->paginate(15);
+
+        $favorites = Post::with(['favorites'])
+            ->withCount(['favorites' => fn($q) => $q->where('user_id', $user->id)])
+            ->whereHas('favorites', fn($q) => $q->where('user_id', $user->id))
+            ->count();
+
+        $likes = Post::with(['likes'])
+            ->withCount(['likes' => fn($q) => $q->where('user_id', $user->id)])
+            ->whereHas('likes', fn($q) => $q->where('user_id', $user->id))
+            ->count();
+
+        $postsComment = Post::with(['comments'])
+            ->withCount(['comments' => fn($q) => $q->where('user_id', $user->id)])
+            ->whereHas('comments', fn($q) => $q->where('user_id', $user->id))
+            ->get();
+
+        $comments = 0;
+        foreach ($postsComment as $postComment) {
+            $comments += $postComment->comments->count();
+        }
+            
+        return Inertia::render('Profile/Show', compact(
+            'user',
+            'posts',
+            'favorites',
+            'likes',
+            'comments'
+        ));
+    }
+
     /**
      * Display the user's profile form.
      */

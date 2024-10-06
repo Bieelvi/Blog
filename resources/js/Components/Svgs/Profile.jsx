@@ -1,7 +1,7 @@
 export default function Profile({ translate }) {
     return (
         <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_15_82)">
+            <g clipPath="url(#clip0_15_82)">
                 <rect width="25" height="25" />
                 <g filter="url(#filter0_d_15_82)">
                     <path 
@@ -11,8 +11,8 @@ export default function Profile({ translate }) {
                 </g>
             </g>
             <defs>
-                <filter id="filter0_d_15_82" x="2.55444" y="3.5" width="18.8911" height="19" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <filter id="filter0_d_15_82" x="2.55444" y="3.5" width="18.8911" height="19" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
                     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                     <feOffset dy="1" />
                     <feGaussianBlur stdDeviation="0.5" />

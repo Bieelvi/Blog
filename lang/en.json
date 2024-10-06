@@ -154,6 +154,7 @@
   "Editing": "Edição",
   "Edit": "Editar",
   "Back to post": "Voltar para a postagem",
+  "Back": "Voltar",
   "Characters": "Caracteres",
   "characters": "caracteres",
   "Title": "Título",
@@ -185,6 +186,8 @@
   "Click here to comment": "Clique aqui para comentar",
   "Unfavorite": "Desfavoritar",
   "Favorite": "Favoritar",
+  "Favorites": "Favoritos",
+  "Favorites posts": "Posts favoritos",
   "Unliked": "Descurtir",
   "Liked": "Curtir",
   "Check": "Sucesso",
@@ -214,5 +217,11 @@
   "New comment added to the post you favorited": "Novo comentário adicionado à postagem que você favoritou",
   "Mark as read": "Marcar como lido",
   "Delete notification": "Deletar notificação",
-  "Without notifications": "Sem notiicações no momento"
+  "Without notifications": "Sem notiicações no momento",
+  "Joined on": "Juntou-se em",
+  "posts published": "postagens publicadas",
+  "posts favorited": "postagens favoritas",
+  "posts liked": "postagens curtidas",
+  "comments written": "comentários publicados",
+  "tags followed": "tags seguidas"
 }
